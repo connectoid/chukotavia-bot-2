@@ -1,0 +1,47 @@
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram.utils.keyboard import ReplyKeyboardBuilder
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
+
+add_date = KeyboardButton(text='Добавить дату')
+watch_date = KeyboardButton(text='Посмотреть даты')
+settings = KeyboardButton(text='Настройки')
+help = KeyboardButton(text='Помощь')
+
+main_menu = ReplyKeyboardMarkup(
+    keyboard=[[add_date, watch_date],
+              [settings, help]],
+    resize_keyboard=True
+)
+
+# Создаем объекты инлайн-кнопок
+prov_anadyr = InlineKeyboardButton(
+    text='Провидения 🛫 Анадырь',
+    callback_data='prov_anadyr'
+)
+
+anadyr_prov = InlineKeyboardButton(
+    text='Анадырь 🛫 Провидения',
+    callback_data='anadyr_prov'
+)
+
+# Создаем объект инлайн-клавиатуры
+direction_keyboard = InlineKeyboardMarkup(
+    inline_keyboard=[[prov_anadyr],
+                     [anadyr_prov]]
+)
+# Создаем объекты инлайн-кнопок
+yes = InlineKeyboardButton(
+    text='Да',
+    callback_data='yes'
+)
+
+no = InlineKeyboardButton(
+    text='Нет',
+    callback_data='no'
+)
+
+# Создаем объект инлайн-клавиатуры
+yes_no_keyboard = InlineKeyboardMarkup(
+    inline_keyboard=[[yes],
+                     [no]]
+)
