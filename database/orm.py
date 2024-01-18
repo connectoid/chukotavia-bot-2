@@ -23,3 +23,10 @@ def add_user(tg_id, username):
         return 1
     else:
         return -1
+    
+def add_ticket(tg_id, date, direction):
+    session = Session()
+    user = session.query(User).filter(User.tg_id == str(tg_id)).first()
+    new_ticket = Ticket(user_id=user.id, date=date, direction=direction)
+    session.add(new_ticket)
+    session.commit()

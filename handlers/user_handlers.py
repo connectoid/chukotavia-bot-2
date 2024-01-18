@@ -6,7 +6,7 @@ from aiogram.fsm.state import default_state, State, StatesGroup
 from aiogram.fsm.storage.memory import MemoryStorage
 
 from keyboards.keyboards import main_menu, direction_keyboard, yes_no_keyboard
-from database.orm import add_user 
+from database.orm import add_user, add_ticket
 
 router = Router()
 storage = MemoryStorage()
@@ -95,9 +95,12 @@ async def process_direction_sent(callback: CallbackQuery, state: FSMContext):
     await state.clear()
     # Отправляем в чат сообщение о выходе из машины состояний
     direction_ru = directions[date_dict[callback.from_user.id]["direction"]]
+    direction_en = date_dict[callback.from_user.id]["direction"]
+    date = date_dict[callback.from_user.id]["date"]
+    add_ticket(callback.from_user.id, date, direction_en)
     await callback.message.edit_text(
         text='Спасибо! Ваши данные сохранены!\n'
-             f'Добавлен билет на {date_dict[callback.from_user.id]["date"]} по маршруту {direction_ru}\n'
+             f'Добавлен билет на {date} по маршруту {direction_ru}\n'
              'Добавить еще одну дату?',
              reply_markup=yes_no_keyboard)
     
