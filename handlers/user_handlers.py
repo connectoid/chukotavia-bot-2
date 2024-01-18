@@ -6,6 +6,7 @@ from aiogram.fsm.state import default_state, State, StatesGroup
 from aiogram.fsm.storage.memory import MemoryStorage
 
 from keyboards.keyboards import main_menu, direction_keyboard, yes_no_keyboard
+from database.orm import add_user 
 
 router = Router()
 storage = MemoryStorage()
@@ -23,6 +24,8 @@ directions = {
 
 @router.message(CommandStart(), StateFilter(default_state))
 async def proccess_start_command(message: Message):
+    response = add_user(message.from_user.id, message.from_user.username)
+    print(response)
     await message.answer('Приветствую. Вы запустили бот, который мониторит наличие в продаже билетов '
                          'авиакомпании Чукотавиа на заданные маршрут и дату. Краткая инструкция по работе '
                          'с ботом находится в разделе Справка в главном меню.',
@@ -31,13 +34,13 @@ async def proccess_start_command(message: Message):
 
 @router.message(Command(commands='cancel'), StateFilter(default_state))
 async def process_cancel_command(message: Message):
-    await message.answer(text='Отменять нечего. Вы не в процессе добавления даты\n',
+    await message.answer(text='Отменять нечего. Вы не в процессе добавления билета\n',
                          reply_markup=main_menu)
     
 
 @router.message(Command(commands='cancel'), ~StateFilter(default_state))
 async def process_cancel_command_state(message: Message, state: FSMContext):
-    await message.answer(text='Вы вышли из процесса добавления адреса\n\n',
+    await message.answer(text='Вы вышли из процесса добавления билета\n\n',
                          reply_markup=main_menu)
     await state.clear()
 
@@ -65,7 +68,7 @@ async def process_adddate_callback(callback: CallbackQuery, state: FSMContext):
 async def process_name_sent(message: Message, state: FSMContext):
     # Cохраняем введенную дату в хранилище по ключу "date"
     await state.update_data(date=message.text)
-    await message.answer(text='Спасибо!\n\nА теперь введите направление',
+    await message.answer(text='Спасибо!\nА теперь выберите направление',
                          reply_markup=direction_keyboard)
     # Устанавливаем состояние ожидания ввода направления
     await state.set_state(FSMAddDate.add_direction)
@@ -94,7 +97,7 @@ async def process_direction_sent(callback: CallbackQuery, state: FSMContext):
     direction_ru = directions[date_dict[callback.from_user.id]["direction"]]
     await callback.message.edit_text(
         text='Спасибо! Ваши данные сохранены!\n'
-             f'Добавлена дата {date_dict[callback.from_user.id]["date"]} по маршруту {direction_ru}\n'
+             f'Добавлен билет на {date_dict[callback.from_user.id]["date"]} по маршруту {direction_ru}\n'
              'Добавить еще одну дату?',
              reply_markup=yes_no_keyboard)
     
@@ -102,8 +105,8 @@ async def process_direction_sent(callback: CallbackQuery, state: FSMContext):
 @router.message(StateFilter(FSMAddDate.add_direction))
 async def warning_not_direction(message: Message):
     await message.answer(
-        text='Пожалуйста, воспользуйтесь кнопками для выбора направления!\n\n'
-             'Если вы хотите прервать добавление даты и направления - '
+        text='Пожалуйста, воспользуйтесь кнопками для выбора направления!\n'
+             'Если вы хотите прервать добавление билетп - '
              'отправьте команду /cancel',
              reply_markup=direction_keyboard
     )
@@ -114,11 +117,12 @@ async def process_direction_exit(callback: CallbackQuery, state: FSMContext):
     # await state.clear()
     await callback.message.delete()
     await callback.message.answer(
-        text='Спасибо! Вы вышли из процесса добавления даты\n',
+        text='Спасибо! Вы вышли из процесса добавления билета\n',
              reply_markup=main_menu)
 
 
 @router.message(Command(commands='help'))
+@router.message(F.text == 'Помощь', StateFilter(default_state))
 async def process_help_command(message: Message):
     await message.answer(text='Здесь будет справочная информация', 
                          reply_markup=main_menu)
