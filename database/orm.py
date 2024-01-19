@@ -30,3 +30,23 @@ def add_ticket(tg_id, date, direction):
     new_ticket = Ticket(user_id=user.id, date=date, direction=direction)
     session.add(new_ticket)
     session.commit()
+
+
+def get_tickets(tg_id):
+    session = Session()
+    user = session.query(User).filter(User.tg_id == str(tg_id)).first()
+    tickets = session.query(Ticket).filter_by(user_id=user.id).all()
+    return tickets
+
+
+def delete_ticket(ticket_id):
+    session = Session()
+    ticket = session.get(Ticket, ticket_id)
+    session.delete(ticket)
+    session.commit()
+
+
+def get_ticket_by_id(ticket_id):
+    session = Session()
+    ticket = session.get(Ticket, ticket_id)
+    return ticket

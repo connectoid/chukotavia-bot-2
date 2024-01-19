@@ -10,9 +10,12 @@ Base = declarative_base()
 class Ticket(Base):
     __tablename__ = 'tickets'
     id = Column(Integer, primary_key=True)
-    date = Column(DateTime, nullable=False)
+    date = Column(String, nullable=False)
     direction = Column(String, nullable=False)
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+
+    # def __repr__(self):
+    #     return self.date
 
 class User(Base):
     __tablename__ = 'users'

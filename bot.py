@@ -9,6 +9,7 @@ from aiogram.types import Message
 
 from config_data.config import load_config
 from handlers import other_handlers, user_handlers
+from service.tools import check_and_convert_date
 
 async def main():
     dotenv.load_dotenv()
