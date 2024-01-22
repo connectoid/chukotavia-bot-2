@@ -15,6 +15,7 @@ from config_data.config import load_config
 from handlers import other_handlers, user_handlers
 from service.tools import request_tickets
 from database.orm import get_all_users, get_tickets, get_ticket_by_id
+from keyboards.commands_menu import set_commands_menu
 
 dotenv.load_dotenv()
 config = load_config('.env')
@@ -80,5 +81,6 @@ def schedule_jobs():
 
 
 if __name__ == '__main__':
+    dp.startup.register(set_commands_menu)
     logging.info('Бот запущен')
     asyncio.run(main())

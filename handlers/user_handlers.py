@@ -235,12 +235,15 @@ async def process_request_ticket(callback: CallbackQuery):
 
 @router.message(Command(commands='give_premium'))
 async def process_give_premium_command(message: Message):
-    users = get_all_users()
-    for user in users:
-        premium_user = is_premium_user(user.tg_id)
-        keyboard = create_give_premium_keyboard(premium_user)
-        await message.answer(text=f'{user.tg_id} Премиум {"включен" if premium_user else "выключен"}', 
+    if str(message.from_user.id) in ADMINS:
+        users = get_all_users()
+        for user in users:
+            premium_user = is_premium_user(user.tg_id)
+            keyboard = create_give_premium_keyboard(premium_user)
+            await message.answer(text=f'{user.tg_id} ({user.username}): Премиум {"включен" if premium_user else "выключен"}', 
                             reply_markup=keyboard)
+    else:
+        await message.answer(text='ℹ️ Эта функция доступна только админстраторам!')
 
 
 @router.callback_query(F.data == 'enable_premium')
