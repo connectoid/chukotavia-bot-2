@@ -22,7 +22,7 @@ class Config:
     db: DatabaseConfig
 
 
-def load_config(path: str | None = None) -> Config:
+def load_config(path: str = None) -> Config:
 
     dotenv.load_dotenv()
 

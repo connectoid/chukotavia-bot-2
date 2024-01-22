@@ -8,7 +8,7 @@ async def set_commands_menu(bot: Bot):
         BotCommand(command='/start',
                    description='Запуск бота'),
         BotCommand(command='/help',
-                   description='Мправка по работе бота'),
+                   description='Справка по работе бота'),
         BotCommand(command='/give_premium',
                    description='Дать пользователям доступ ко всем функциям бота (только для администраторов)')
     ]
