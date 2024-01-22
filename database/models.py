@@ -23,6 +23,8 @@ class User(Base):
     username = Column(String, default=None, nullable=True)
     tg_id = Column(String, nullable=False)
     admin = Column(Boolean, default=False, nullable=False)
+    premium = Column(Boolean, default=False, nullable=False)
+    everyday_message = Column(Boolean, default=True)
     tickets = relationship(Ticket, backref='users', lazy=True)
     
     def __repr__(self):

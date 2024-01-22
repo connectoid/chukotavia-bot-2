@@ -24,16 +24,16 @@ def parse_json(r):
         originalPrice = r.json()['prices'][0]['originalPrice']
         available = r.json()['prices'][0]['flight_variants'][0]['direction'][0]['available']
         tg_message = f'{datetime.date.today()}: Есть билеты на {departuredate} по маршруту {origincityName} - {destinationcityName} по цене {originalPrice} руб. в количестве {available} шт.'
-        # send_message(tg_message)
+        result = True
     except KeyError:
-        print(f'Скорее всего билетов нет')
         try:
             error = r.json()['error']
             if error == 'web.search.nullPricing':
                 tg_message = f'Билетов на эту дату нет'
+                result = False
         except KeyError:
             print(f'Скорее всего билеты есть')
-    return tg_message
+    return result, tg_message
 
 
 def get_ticket_info(date, origin, destination):
@@ -49,7 +49,6 @@ def get_ticket_info(date, origin, destination):
         'infantsWithSeatCount': '0',
         'infantsWithoutSeatCount': '0',
     }
-    print(payload)
     try:
         r = requests.get(url, params=payload, headers=fake_ua)
         return parse_json(r)
@@ -65,7 +64,7 @@ def request_tickets(date, direction):
     return result
 
     
-def check_and_convert_date(date):
+def check_date(date):
     try:
         datetime.datetime.strptime(date,"%d.%m.%Y")
         return True
@@ -73,3 +72,10 @@ def check_and_convert_date(date):
         print(err)
         return False
     
+
+def convert_date(date):
+    if len(date.split('.')[0]) == 1:
+        date = '0' + date
+    if len(date.split('.')[1]) == 1:
+        date = date[:3] + '0' + date[3:]
+    return date

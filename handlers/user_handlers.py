@@ -5,9 +5,14 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import default_state, State, StatesGroup
 from aiogram.fsm.storage.memory import MemoryStorage
 
-from keyboards.keyboards import main_menu, direction_keyboard, yes_no_keyboard, create_del_request_keyboard
-from database.orm import add_user, add_ticket, get_tickets, delete_ticket, get_ticket_by_id
-from service.tools import check_and_convert_date, request_tickets
+from keyboards.keyboards import (main_menu, direction_keyboard, yes_no_keyboard,
+                                 create_del_request_keyboard, create_everyday_message_keyboard,
+                                 create_give_premium_keyboard)
+from database.orm import (add_user, add_ticket, get_tickets, delete_ticket,get_ticket_by_id,
+                          get_date_and_direction_from_ticket_id, get_user_settings, disable_everyday_message,
+                          enable_everyday_message, is_premium_user, get_all_users, enable_premium, disable_premium)
+from service.tools import check_date, convert_date, request_tickets
+from config_data.config import load_config
 
 router = Router()
 storage = MemoryStorage()
@@ -16,17 +21,29 @@ class FSMAddDate(StatesGroup):
     add_date = State()
     add_direction = State()
 
+config = load_config('.env')
+ADMINS = config.tg_bot.admins
+
 date_dict = {}
 directions = {
     'PVS_DYR': 'Провидения - Анадырь',
     'DYR_PVS': 'Анадырь - Провидения',
 }
 
+HELP_MESSAGE = ('Для работы с ботом используйте следующие режимы:\n\n'
+                'Добавить билет - добавление даты вылета и выбор направления. После добавления билета, '
+                'бот начинает мониторить появление в продаже билета на заданную дату. Запрос выполняется '
+                'каждые 5 минут\n\n'
+                'Посмотреть билеты - просмотр всех добавленных билетов. По каждому билету можно сразу '
+                'выполнить проверку наличия в продаже нажав кнопку "Проверить" под билетом. Так же можно '
+                'удалить любой билет кнопкой "Удалить"\n\n'
+                'Настройки - здесь можно включить или выключить ежедневную отправку сообщения о работе бота. '
+                'Она выполняется каждый день в 12-00, чтобы быть уверенным что бот работает\n\n'
+                'По всем вопросам и предложениям можно обращаться к автору бота на @connectoid')
 
 @router.message(CommandStart(), StateFilter(default_state))
 async def proccess_start_command(message: Message):
     response = add_user(message.from_user.id, message.from_user.username)
-    print(response)
     await message.answer('Приветствую. Вы запустили бот, который мониторит наличие в продаже билетов '
                          'авиакомпании Чукотавиа на заданные маршрут и дату. Краткую инструкцию по работе '
                          'с ботом можно посмотреть в разделе Помощь в главном меню или выполнив команду /help.',
@@ -35,29 +52,39 @@ async def proccess_start_command(message: Message):
 
 @router.message(Command(commands='cancel'), StateFilter(default_state))
 async def process_cancel_command(message: Message):
-    await message.answer(text='Отменять нечего. Вы не в процессе добавления даты\n',
+    await message.answer(text='ℹ️ Отменять нечего. Вы не в процессе добавления билета\n',
                          reply_markup=main_menu)
     
 
 @router.message(Command(commands='cancel'), ~StateFilter(default_state))
 async def process_cancel_command_state(message: Message, state: FSMContext):
-    await message.answer(text='Вы вышли из процесса добавления даты\n\n',
+    await message.answer(text='Вы вышли из процесса добавления билета\n\n',
                          reply_markup=main_menu)
     await state.clear()
 
 
 @router.message(Command(commands='adddate'), StateFilter(default_state))
-@router.message(F.text == 'Добавить дату', StateFilter(default_state))
+@router.message(F.text == 'Добавить билет', StateFilter(default_state))
 async def process_adddate_command(message: Message, state: FSMContext):
-    await message.answer(text='Пожалуйста, введите дату в формате ДД.ММ.ГГГГ',
-                         show_alert=False)
-    await state.set_state(FSMAddDate.add_date)
+    if is_premium_user(message.from_user.id):
+        await message.answer(text='Пожалуйста, введите дату в формате ДД.ММ.ГГГГ\n'
+                            'Если вы хотите прервать добавление билета - '
+                                'отправьте команду /cancel',
+                            show_alert=False)
+        await state.set_state(FSMAddDate.add_date)
+    else:
+        await message.answer(text='ℹ️ У вас нет прав на использования бота!\n'
+                            'Для получения доступа ко всем функциям бота, '
+                            'напишите в Телеграм на @connectoid',
+                            show_alert=False)
 
 
 @router.callback_query(F.data == 'yes', StateFilter(default_state))
 async def process_adddate_callback(callback: CallbackQuery, state: FSMContext):
     await callback.message.edit_text(
-        text='Пожалуйста, введите дату в формате ДД.ММ.ГГГГ')
+        text='Пожалуйста, введите дату в формате ДД.ММ.ГГГГ\n'
+                'Если вы хотите прервать добавление билета - '
+                             'отправьте команду /cancel')
     await state.set_state(FSMAddDate.add_date)
     
 
@@ -66,16 +93,17 @@ async def process_adddate_callback(callback: CallbackQuery, state: FSMContext):
 @router.message(StateFilter(FSMAddDate.add_date), ~F.text.isalpha())
 async def process_name_sent(message: Message, state: FSMContext):
     # Cохраняем введенную дату в хранилище по ключу "date"
-    if check_and_convert_date(message.text):
-        await state.update_data(date=message.text)
+    if check_date(message.text):
+        date = convert_date(message.text)
+        await state.update_data(date=date)
         await message.answer(text='Спасибо!\nА теперь выберите направление',
                             reply_markup=direction_keyboard)
         # Устанавливаем состояние ожидания ввода направления
         await state.set_state(FSMAddDate.add_direction)
     else:
-        await message.answer(text='Вы ввели дату в неправильном формате или несуществующую дату\n'
+        await message.answer(text='ℹ️ Вы ввели дату в неправильном формате или несуществующую дату\n'
                              'Пожалйста, введите дату в формате ДД.ММ.ГГГГ\n'
-                             'Если вы хотите прервать добавление даты - '
+                             'Если вы хотите прервать добавление билета - '
                              'отправьте команду /cancel')
 
 
@@ -84,7 +112,7 @@ async def process_name_sent(message: Message, state: FSMContext):
 @router.message(StateFilter(FSMAddDate.add_date))
 async def warning_not_date(message: Message):
     await message.answer(
-        text='То, что вы отправили не похоже на дату\n'
+        text='ℹ️ То, что вы отправили не похоже на дату\n'
              'Пожалуйста, введите дату в формате ДД.ММ.ГГГГ\n'
              'Если вы хотите прервать добавление даты - '
              'отправьте команду /cancel'
@@ -102,19 +130,24 @@ async def process_direction_sent(callback: CallbackQuery, state: FSMContext):
     direction_ru = directions[date_dict[callback.from_user.id]["direction"]]
     direction_en = date_dict[callback.from_user.id]["direction"]
     date = date_dict[callback.from_user.id]["date"]
-    add_ticket(callback.from_user.id, date, direction_en)
-    await callback.message.edit_text(
-        text='Спасибо! Ваши данные сохранены!\n'
-             f'Добавлен монитторинг билетов на {date} по маршруту {direction_ru}\n'
-             'Добавить еще одну дату?',
-             reply_markup=yes_no_keyboard, row_width = 2)
-    
+    if add_ticket(callback.from_user.id, date, direction_en):
+        await callback.message.edit_text(
+            text='Спасибо! Ваши данные сохранены!\n'
+                f'Добавлен мониторинг билетов на {date} по маршруту {direction_ru}\n'
+                'Добавить еще один билет?',
+                reply_markup=yes_no_keyboard, row_width = 2)
+    else:
+        await callback.message.edit_text(
+            text=f'ℹ️ Билет на {date} по маршруту {direction_ru}'
+                'уже был добавлен ранее. Добавить другой билет?',
+                reply_markup=yes_no_keyboard, row_width = 2)
+
 
 @router.message(StateFilter(FSMAddDate.add_direction))
 async def warning_not_direction(message: Message):
     await message.answer(
-        text='Пожалуйста, воспользуйтесь кнопками для выбора направления!\n'
-             'Если вы хотите прервать добавление даты - '
+        text='ℹ️ Пожалуйста, воспользуйтесь кнопками для выбора направления!\n'
+             'Если вы хотите прервать добавление билета - '
              'отправьте команду /cancel',
              reply_markup=direction_keyboard
     )
@@ -125,19 +158,44 @@ async def process_direction_exit(callback: CallbackQuery, state: FSMContext):
     # await state.clear()
     await callback.message.delete()
     await callback.message.answer(
-        text='Спасибо! Вы вышли из процесса добавления даты\n',
+        text='Спасибо! Вы вышли из процесса добавления билета\n',
              reply_markup=main_menu)
 
 
 @router.message(Command(commands='help'))
 @router.message(F.text == 'Помощь', StateFilter(default_state))
 async def process_help_command(message: Message):
-    await message.answer(text='Здесь будет справочная информация', 
+    await message.answer(text=HELP_MESSAGE, 
                          reply_markup=main_menu)
 
 
+@router.message(Command(commands='settings'))
+@router.message(F.text == 'Настройки', StateFilter(default_state))
+async def process_help_command(message: Message):
+    everyday_message_on = get_user_settings(message.from_user.id)
+    keyboard = create_everyday_message_keyboard(everyday_message_on)
+    await message.answer(text=f'Ежедневное сообщение о работе бота {"включено" if everyday_message_on else "выключено"}', 
+                         reply_markup=keyboard)
+
+
+@router.callback_query(F.data == 'everyday_message_on')
+async def process_enable_everyday_message(callback: CallbackQuery):
+    enable_everyday_message(callback.from_user.id)
+    keyboard = create_everyday_message_keyboard(True)
+    await callback.message.edit_text(text='Ежедневное сообщение о работе бота включено')
+    await callback.message.edit_reply_markup(reply_markup=keyboard)
+
+
+@router.callback_query(F.data == 'everyday_message_off')
+async def process_disable_everyday_message(callback: CallbackQuery):
+    disable_everyday_message(callback.from_user.id)
+    keyboard = create_everyday_message_keyboard(False)
+    await callback.message.edit_text(text='Ежедневное сообщение о работе бота выключено')
+    await callback.message.edit_reply_markup(reply_markup=keyboard)
+
+
 @router.message(Command(commands='gettickets'))
-@router.message(F.text == 'Посмотреть даты')
+@router.message(F.text == 'Посмотреть билеты')
 async def process_gettickets_command(message: Message):
     tickets = get_tickets(message.from_user.id)
     if tickets:
@@ -149,7 +207,7 @@ async def process_gettickets_command(message: Message):
                                  reply_markup=del_request_keyboard,
                                  row_width = 2)
     else:
-        await message.answer(text=f'У вас еще не добавлено ни одной даты', 
+        await message.answer(text=f'ℹ️ У вас еще не добавлено ни однго билета', 
                                 reply_markup=main_menu)
         
     
@@ -157,18 +215,45 @@ async def process_gettickets_command(message: Message):
 async def process_delete_ticket(callback: CallbackQuery):
     # await callback.message.delete()
     ticket_id = callback.data.split('_')[1]
+    date, direction = get_date_and_direction_from_ticket_id(ticket_id)
     delete_ticket(ticket_id)
+    await callback.message.delete()
     await callback.message.answer(
-        text='Дата удалена из мониторинга\n',
+        text=f'Билет на {date} по маршруту {directions[direction]} удален из мониторинга\n',
              reply_markup=main_menu)
 
 
 @router.callback_query(lambda x: 'request_' in x.data)
 async def process_request_ticket(callback: CallbackQuery):
-    # await callback.message.delete()
     ticket_id = callback.data.split('_')[1]
     ticket = get_ticket_by_id(ticket_id)
-    ticket_message = request_tickets(ticket.date, ticket.direction)
+    result, ticket_message = request_tickets(ticket.date, ticket.direction)
     await callback.message.answer(
         text=ticket_message,
              reply_markup=main_menu)
+
+
+@router.message(Command(commands='give_premium'))
+async def process_give_premium_command(message: Message):
+    users = get_all_users()
+    for user in users:
+        premium_user = is_premium_user(user.tg_id)
+        keyboard = create_give_premium_keyboard(premium_user)
+        await message.answer(text=f'{user.tg_id} Премиум {"включен" if premium_user else "выключен"}', 
+                            reply_markup=keyboard)
+
+
+@router.callback_query(F.data == 'enable_premium')
+async def process_enable_everyday_message(callback: CallbackQuery):
+    enable_premium(callback.from_user.id)
+    keyboard = create_give_premium_keyboard(True)
+    await callback.message.edit_text(text='Премиум включен')
+    await callback.message.edit_reply_markup(reply_markup=keyboard)
+
+
+@router.callback_query(F.data == 'disable_premium')
+async def process_enable_everyday_message(callback: CallbackQuery):
+    enable_premium(callback.from_user.id)
+    keyboard = create_give_premium_keyboard(False)
+    await callback.message.edit_text(text='Премиум выключен')
+    await callback.message.edit_reply_markup(reply_markup=keyboard)
