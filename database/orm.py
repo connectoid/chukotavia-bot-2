@@ -22,6 +22,11 @@ def add_user(tg_id, username):
     else:
         return -1
     
+def get_user(tg_id):
+    session = Session()
+    user = session.query(User).filter(User.tg_id == str(tg_id)).first()
+    return user
+    
 def add_ticket(tg_id, date, direction):
     session = Session()
     user = session.query(User).filter(User.tg_id == str(tg_id)).first()

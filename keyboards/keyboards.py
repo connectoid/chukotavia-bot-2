@@ -93,15 +93,15 @@ def create_everyday_message_keyboard(is_enabled):
                 
 
 # Инлайн-клавиатура Premium
-def create_give_premium_keyboard(is_enabled):
+def create_give_premium_keyboard(is_enabled, tg_id, username):
     enable_premium = InlineKeyboardButton(
         text='Дать Premium',
-        callback_data=f'enable_premium'
+        callback_data=f'enable_premium-{tg_id}-{username}'
     )
 
     disable_premium = InlineKeyboardButton(
         text='Забрать Premium',
-        callback_data=f'disable_premium'
+        callback_data=f'disable_premium-{tg_id}-{username}'
     )
 
     if is_enabled:
