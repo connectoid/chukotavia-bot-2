@@ -10,6 +10,6 @@ async def set_commands_menu(bot: Bot):
         BotCommand(command='/help',
                    description='Справка по работе бота'),
         BotCommand(command='/give_premium',
-                   description='Дать пользователям доступ ко всем функциям бота (только для администраторов)')
+                   description='Раздел для администраторов')
     ]
     await bot.set_my_commands(main_menu_commands)
