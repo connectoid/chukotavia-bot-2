@@ -10,7 +10,8 @@ from keyboards.keyboards import (main_menu, direction_keyboard, yes_no_keyboard,
                                  create_give_premium_keyboard)
 from database.orm import (add_user, add_ticket, get_tickets, delete_ticket,get_ticket_by_id,
                           get_date_and_direction_from_ticket_id, get_user_settings, disable_everyday_message,
-                          enable_everyday_message, is_premium_user, get_all_users, enable_premium, disable_premium)
+                          enable_everyday_message, is_premium_user, get_all_users, enable_premium, 
+                          disable_premium, get_user)
 from service.tools import check_date, convert_date, request_tickets
 from config_data.config import load_config
 
@@ -39,6 +40,8 @@ HELP_MESSAGE = ('Для работы с ботом используйте сле
                 'удалить любой билет кнопкой "Удалить"\n\n'
                 'Настройки - здесь можно включить или выключить ежедневную отправку сообщения о работе бота. '
                 'Она выполняется каждый день в 12-00, чтобы быть уверенным что бот работает\n\n'
+                'ВНИМАНИЕ: Если бот не отвечает на запрос сразу, подождите некоторое время и не делайте '
+                'повторные запросы. Если бот не отвечает дольше 2-3 минут, просьба сообщить на @connectoid\n\n'
                 'По всем вопросам и предложениям можно обращаться к автору бота на @connectoid')
 
 @router.message(CommandStart(), StateFilter(default_state))
@@ -239,24 +242,28 @@ async def process_give_premium_command(message: Message):
         users = get_all_users()
         for user in users:
             premium_user = is_premium_user(user.tg_id)
-            keyboard = create_give_premium_keyboard(premium_user)
+            keyboard = create_give_premium_keyboard(premium_user, user.tg_id, user.username)
             await message.answer(text=f'{user.tg_id} ({user.username}): Премиум {"включен" if premium_user else "выключен"}', 
                             reply_markup=keyboard)
     else:
         await message.answer(text='ℹ️ Эта функция доступна только админстраторам!')
 
 
-@router.callback_query(F.data == 'enable_premium')
-async def process_enable_everyday_message(callback: CallbackQuery):
-    enable_premium(callback.from_user.id)
-    keyboard = create_give_premium_keyboard(True)
-    await callback.message.edit_text(text='Премиум включен')
+@router.callback_query(lambda x: 'enable_premium' in x.data)
+async def process_enable_premium(callback: CallbackQuery):
+    tg_id = callback.data.split('-')[1]
+    username = callback.data.split('-')[2]
+    enable_premium(tg_id)
+    keyboard = create_give_premium_keyboard(True, tg_id, username)
+    await callback.message.edit_text(text=f'{tg_id} ({username}): Премиум включен')
     await callback.message.edit_reply_markup(reply_markup=keyboard)
 
 
-@router.callback_query(F.data == 'disable_premium')
-async def process_enable_everyday_message(callback: CallbackQuery):
-    disable_premium(callback.from_user.id)
-    keyboard = create_give_premium_keyboard(False)
-    await callback.message.edit_text(text='Премиум выключен')
+@router.callback_query(lambda x: 'disable_premium' in x.data)
+async def process_disable_premium(callback: CallbackQuery):
+    tg_id = callback.data.split('-')[1]
+    username = callback.data.split('-')[2]
+    disable_premium(tg_id)
+    keyboard = create_give_premium_keyboard(False, tg_id, username)
+    await callback.message.edit_text(text=f'{tg_id} ({username}): Премиум выключен')
     await callback.message.edit_reply_markup(reply_markup=keyboard)
