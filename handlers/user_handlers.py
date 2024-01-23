@@ -138,7 +138,7 @@ async def process_direction_sent(callback: CallbackQuery, state: FSMContext):
                 reply_markup=yes_no_keyboard, row_width = 2)
     else:
         await callback.message.edit_text(
-            text=f'ℹ️ Билет на {date} по маршруту {direction_ru}'
+            text=f'ℹ️ Билет на {date} по маршруту {direction_ru} '
                 'уже был добавлен ранее. Добавить другой билет?',
                 reply_markup=yes_no_keyboard, row_width = 2)
 

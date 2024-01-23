@@ -25,13 +25,14 @@ def add_user(tg_id, username):
 def add_ticket(tg_id, date, direction):
     session = Session()
     user = session.query(User).filter(User.tg_id == str(tg_id)).first()
-    ticket = Ticket(user_id=user.id, date=date, direction=direction)
+    ticket = session.query(Ticket).filter_by(user_id=user.id, date=date, direction=direction).first()
     if ticket is None:
         new_ticket = Ticket(user_id=user.id, date=date, direction=direction)
         session.add(new_ticket)
         session.commit()
         return True
-    return False
+    else:
+        return False
 
 
 def get_tickets(tg_id):
