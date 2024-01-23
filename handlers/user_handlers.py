@@ -256,7 +256,7 @@ async def process_enable_everyday_message(callback: CallbackQuery):
 
 @router.callback_query(F.data == 'disable_premium')
 async def process_enable_everyday_message(callback: CallbackQuery):
-    enable_premium(callback.from_user.id)
+    disable_premium(callback.from_user.id)
     keyboard = create_give_premium_keyboard(False)
     await callback.message.edit_text(text='Премиум выключен')
     await callback.message.edit_reply_markup(reply_markup=keyboard)
