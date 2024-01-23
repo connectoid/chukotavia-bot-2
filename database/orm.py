@@ -6,7 +6,7 @@ from .models import Base, User, Ticket
 
 config = load_config('.env')
 
-engine = create_engine(config.db.database_url, echo=False)
+engine = create_engine(config.db.database_url, echo=True, pool_size=20, max_overflow=0)
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 
