@@ -50,9 +50,9 @@ def get_ticket_info(date, origin, destination):
         'infantsWithoutSeatCount': '0',
     }
     try:
-        print(ƒ'START Requesting ticets on {date} from {origin} to {destination}')
+        print(f'START Requesting ticets on {date} from {origin} to {destination}')
         r = requests.get(url, params=payload, headers=fake_ua)
-        print('FINISH Requesting ticets on {date} from {origin} to {destination}')
+        print(f'FINISH Requesting ticets on {date} from {origin} to {destination}')
         return parse_json(r)
     except IOError:
         print('Ошибка запроса')
