@@ -31,6 +31,8 @@ def parse_json(r):
             if error == 'web.search.nullPricing':
                 tg_message = f'Билетов на эту дату нет'
                 result = False
+            else:
+                result = False
         except KeyError:
             print(f'Скорее всего билеты есть')
     return result, tg_message
