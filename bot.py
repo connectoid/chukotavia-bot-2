@@ -47,7 +47,7 @@ async def main():
     # dp = Dispatcher()
     dp.include_router(user_handlers.router)
     dp.include_router(other_handlers.router)
-    schedule_jobs()
+    await schedule_jobs()
     scheduler.start()
 
     await bot.delete_webhook(drop_pending_updates=True)
@@ -73,7 +73,7 @@ async def request_dates(dp: Dispatcher):
             sleep(interval)
     
 
-def schedule_jobs():
+async def schedule_jobs():
     scheduler.add_job(
         send_message_to_users, 'cron', day_of_week='*',
         hour=EVERYDAY_MESSAGE_HOUR, minute=EVERYDAY_MESSAGE_MINUTE, end_date='2030-12-31' , args=(dp,))
