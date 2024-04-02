@@ -20,13 +20,11 @@ def add_user(tg_id, username):
         session.commit()
         return 1
     else:
-        session.commit()
         return -1
     
 def get_user(tg_id):
     session = Session()
     user = session.query(User).filter(User.tg_id == str(tg_id)).first()
-    session.commit()
     return user
     
 def add_ticket(tg_id, date, direction):
@@ -39,7 +37,6 @@ def add_ticket(tg_id, date, direction):
         session.commit()
         return True
     else:
-        session.commit()
         return False
 
 
@@ -47,7 +44,6 @@ def get_tickets(tg_id):
     session = Session()
     user = session.query(User).filter(User.tg_id == str(tg_id)).first()
     tickets = session.query(Ticket).filter_by(user_id=user.id).all()
-    session.commit()
     return tickets
 
 
@@ -61,7 +57,6 @@ def delete_ticket(ticket_id):
 def get_ticket_by_id(ticket_id):
     session = Session()
     ticket = session.get(Ticket, ticket_id)
-    session.commit()
     return ticket
 
 def get_date_and_direction_from_ticket_id(ticket_id):
@@ -69,13 +64,11 @@ def get_date_and_direction_from_ticket_id(ticket_id):
     ticket = session.get(Ticket, ticket_id)
     date = ticket.date
     direction = ticket.direction
-    session.commit()
     return date, direction
 
 def get_all_users():
     session = Session()
     users = session.query(User).all()
-    session.commit()
     return users
 
 
@@ -83,14 +76,12 @@ def get_all_ticket_ids():
     session = Session()
     tickets = session.query(Ticket).all()
     ticket_ids = [int(ticket.id) for ticket in tickets]
-    session.commit()
     return ticket_ids
 
 def get_user_settings(tg_id):
     session = Session()
     user = session.query(User).filter(User.tg_id == str(tg_id)).first()
     everyday_message = user.everyday_message
-    session.commit()
     return everyday_message
 
 def disable_everyday_message(tg_id):
@@ -110,7 +101,6 @@ def enable_everyday_message(tg_id):
 def is_premium_user(tg_id):
     session = Session()
     user = session.query(User).filter(User.tg_id == str(tg_id)).first()
-    session.commit()
     return user.premium
 
 def disable_premium(tg_id):
