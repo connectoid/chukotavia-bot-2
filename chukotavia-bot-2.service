@@ -1,0 +1,15 @@
+[Unit]
+Description=Bot for parsing tickets of Chukotavia
+After=network.target
+
+[Service]
+EnvironmentFile=/etc/environment
+ExecStart=/root/dev/bots/chukotavia-bot-2/venv/bin/python bot.py
+ExecReload=/root/dev/bots/chukotavia-bot-2/venv/bin/python bot.py
+WorkingDirectory=/root/dev/bots/chukotavia-bot-2/
+KillMode=process
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
