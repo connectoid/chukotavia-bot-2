@@ -58,7 +58,7 @@ async def send_message_to_users(dp: Dispatcher):
     for user in users:
         if user.everyday_message:
             await bot.send_message(chat_id=user.tg_id, text='Все нормально, я работаю') 
-            sleep(2)
+            await asyncio.sleep(2)
 
 
 async def request_dates(dp: Dispatcher):
@@ -71,7 +71,7 @@ async def request_dates(dp: Dispatcher):
             result, ticket_message = request_tickets(user_ticket.date, user_ticket.direction)
             if result:
                 await bot.send_message(chat_id=user.tg_id, text=ticket_message) 
-            sleep(interval)
+            await asyncio.sleep(interval)
     
 
 async def schedule_jobs():
