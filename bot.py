@@ -72,6 +72,7 @@ async def request_dates(dp: Dispatcher):
             if result:
                 await bot.send_message(chat_id=user.tg_id, text=ticket_message) 
             await asyncio.sleep(interval)
+            # sleep(interval)
     
 
 async def schedule_jobs():
