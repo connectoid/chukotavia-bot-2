@@ -29,6 +29,10 @@ date_dict = {}
 directions = {
     'PVS_DYR': 'Провидения - Анадырь',
     'DYR_PVS': 'Анадырь - Провидения',
+    'ЭГТ_DYR': 'Эгвекинот - Анадырь',
+    'DYR_ЭГТ': 'Анадырь - Эгвекинот',
+    'ЗЛА_DYR': 'Лаврентия - Анадырь',
+    'DYR_ЗЛА': 'Анадырь - Лаврентия',
 }
 
 HELP_MESSAGE = ('Для работы с ботом используйте следующие режимы:\n\n'
@@ -124,6 +128,10 @@ async def warning_not_date(message: Message):
 
 @router.callback_query(F.data == 'PVS_DYR')
 @router.callback_query(F.data == 'DYR_PVS')
+@router.callback_query(F.data == 'ЭГТ_DYR')
+@router.callback_query(F.data == 'DYR_ЭГТ')
+@router.callback_query(F.data == 'ЗЛА_DYR')
+@router.callback_query(F.data == 'DYR_ЗЛА')
 async def process_direction_sent(callback: CallbackQuery, state: FSMContext):
     # Cохраняем введенное направление в хранилище по ключу "direction"
     await state.update_data(direction=callback.data)

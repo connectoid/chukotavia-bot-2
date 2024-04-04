@@ -27,9 +27,33 @@ anadyr_prov = InlineKeyboardButton(
     callback_data='DYR_PVS'
 )
 
+egv_anadyr = InlineKeyboardButton(
+    text='Эгвекинот - Анадырь',
+    callback_data='ЭГТ_DYR'
+)
+
+anadyr_egv = InlineKeyboardButton(
+    text='Анадырь - Эгвекинот',
+    callback_data='DYR_ЭГТ'
+)
+
+lavr_anadyr = InlineKeyboardButton(
+    text='Лаврентия - Анадырь',
+    callback_data='ЗЛА_DYR'
+)
+
+anadyr_lavr = InlineKeyboardButton(
+    text='Анадырь - Лаврентия',
+    callback_data='DYR_ЗЛА'
+)
+
 direction_keyboard = InlineKeyboardMarkup(
     inline_keyboard=[[prov_anadyr],
-                     [anadyr_prov]]
+                     [anadyr_prov],
+                     [egv_anadyr],
+                     [anadyr_egv],
+                     [lavr_anadyr],
+                     [anadyr_lavr]]
 )
 
 
