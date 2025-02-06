@@ -97,14 +97,12 @@ async def request_dates_sync(dp: Dispatcher):
             result, ticket_message = request_tickets(user_ticket.date, user_ticket.direction)
             print(f'{user.tg_id} ------------> {ADMIN_CHAT_ID}')
             if result:
-                # await send_message_to_user(user.tg_id, ticket_message)
                 await bot.send_message(chat_id=user.tg_id, text=ticket_message)
-            elif user.tg_id == ADMIN_CHAT_ID:
-                now = datetime.now()
-                current_datetime = now.strftime("%Y-%m-%d %H:%M:%S")
-                ticket_message = f'Это отладочное сообщение. Билетов нет. {current_datetime}'
-                # send_message_to_user(user.tg_id, ticket_message)
-                await bot.send_message(chat_id=user.tg_id, text=ticket_message)
+            # elif user.tg_id == ADMIN_CHAT_ID:
+            #     now = datetime.now()
+            #     current_datetime = now.strftime("%Y-%m-%d %H:%M:%S")
+            #     ticket_message = f'Это отладочное сообщение. Билетов нет. {current_datetime}'
+            #     await bot.send_message(chat_id=user.tg_id, text=ticket_message)
             sleep(interval)
         sleep(interval)
     
