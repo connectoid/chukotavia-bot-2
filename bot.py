@@ -9,7 +9,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.filters import Command
 from aiogram.types import Message
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-
+import apscheduler.schedulers.background
 
 from config_data.config import load_config
 from handlers import other_handlers, user_handlers
@@ -22,12 +22,13 @@ config = load_config('.env')
 
 BOT_TOKEN = config.tg_bot.token
 LOG_FILE = 'chukotabia-bot-2.log'
-REQUEST_INTERVAL = 120
+REQUEST_INTERVAL = 30
 EVERYDAY_MESSAGE_HOUR = 3
 EVERYDAY_MESSAGE_MINUTE = 0
 
 
 scheduler = AsyncIOScheduler()
+# scheduler = apscheduler.schedulers.background.BackgroundScheduler({'apscheduler.job_defaults.max_instances': 5})
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
@@ -79,7 +80,7 @@ async def schedule_jobs():
     scheduler.add_job(
         send_message_to_users, 'cron', day_of_week='*',
         hour=EVERYDAY_MESSAGE_HOUR, minute=EVERYDAY_MESSAGE_MINUTE, end_date='2030-12-31' , args=(dp,))
-    scheduler.add_job(request_dates, 'interval', seconds = REQUEST_INTERVAL, args=(dp,))
+    scheduler.add_job(request_dates, 'interval', seconds = REQUEST_INTERVAL, args=(dp,), max_instances=2)
 
 
 if __name__ == '__main__':
