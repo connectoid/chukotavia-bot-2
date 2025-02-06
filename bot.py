@@ -56,12 +56,17 @@ async def main():
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
     
+
 async def send_message_to_users(dp: Dispatcher):
     users = get_all_users()
     for user in users:
         if user.everyday_message:
             await bot.send_message(chat_id=user.tg_id, text='Все нормально, я работаю') 
             await asyncio.sleep(2)
+
+
+async def send_message_to_user(user_tg_id, message_text):
+        await bot.send_message(chat_id=user_tg_id, text=message_text) 
 
 
 async def request_dates(dp: Dispatcher):
@@ -92,12 +97,14 @@ def request_dates_sync(dp: Dispatcher):
             result, ticket_message = request_tickets(user_ticket.date, user_ticket.direction)
             print(f'{user.tg_id} ------------> {ADMIN_CHAT_ID}')
             if result:
-                bot.send_message(chat_id=user.tg_id, text=ticket_message)
+                send_message_to_user(user.tg_id, ticket_message)
+                # bot.send_message(chat_id=user.tg_id, text=ticket_message)
             elif user.tg_id == ADMIN_CHAT_ID:
                 now = datetime.now()
                 current_datetime = now.strftime("%Y-%m-%d %H:%M:%S")
                 ticket_message = f'Это отладочное сообщение. Билетов нет. {current_datetime}'
-                bot.send_message(chat_id=user.tg_id, text=ticket_message)
+                send_message_to_user(user.tg_id, ticket_message)
+                # bot.send_message(chat_id=user.tg_id, text=ticket_message)
             sleep(interval)
         sleep(interval)
     
