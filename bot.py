@@ -41,7 +41,7 @@ async def main():
     # config = load_config('.env')
     # BOT_TOKEN = config.tg_bot.token
     # LOG_FILE = 'chukotabia-bot-2.log'
-    logging.basicConfig(level=logging.INFO,
+    logging.basicConfig(level=logging.WARNING,
                         filename=LOG_FILE,
                         filemode='a',
                         format='[%(asctime)s] #%(levelname)-8s %(filename)s:'
