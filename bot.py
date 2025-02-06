@@ -90,6 +90,7 @@ def request_dates_sync(dp: Dispatcher):
         for user_ticket in user_tickets:
             print(f'~ ~ ~ ~ ~ ~ ~ Requesting user {user_ticket.date} {user_ticket.direction}')
             result, ticket_message = request_tickets(user_ticket.date, user_ticket.direction)
+            print(f'{user.tg_id} ------------> {ADMIN_CHAT_ID}')
             if result:
                 bot.send_message(chat_id=user.tg_id, text=ticket_message)
             elif user.tg_id == ADMIN_CHAT_ID:
