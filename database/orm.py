@@ -41,7 +41,7 @@ def add_ticket(tg_id, date, direction):
 
 
 def get_tickets(tg_id):
-    print(f'SQLAlchemy get_tickets started with tg_id {tg_id}')
+    print(f'* * * * * * * * * * SQLAlchemy get_tickets started with tg_id {tg_id}')
     session = Session()
     user = session.query(User).filter(User.tg_id == str(tg_id)).first()
     tickets = session.query(Ticket).filter_by(user_id=user.id).all()
@@ -57,35 +57,35 @@ def delete_ticket(ticket_id):
 
 
 def get_ticket_by_id(ticket_id):
-    print(f'SQLAlchemy get_ticket_by_id started with ticket_id {ticket_id}')
+    print(f'* * * * * * * * * * SQLAlchemy get_ticket_by_id started with ticket_id {ticket_id}')
     session = Session()
     ticket = session.get(Ticket, ticket_id)
-    print(f'SQLAlchemy get_ticket_by_id compete with ticket_id {ticket_id}')
+    print(f'= = = = = = = = = = SQLAlchemy get_ticket_by_id compete with ticket_id {ticket_id}')
     return ticket
 
 def get_date_and_direction_from_ticket_id(ticket_id):
-    print(f'SQLAlchemy get_date_and_direction_from_ticket_id started with ticket_id {ticket_id}')
+    print(f'* * * * * * * * * * SQLAlchemy get_date_and_direction_from_ticket_id started with ticket_id {ticket_id}')
     session = Session()
     ticket = session.get(Ticket, ticket_id)
     date = ticket.date
     direction = ticket.direction
-    print(f'SQLAlchemy get_date_and_direction_from_ticket_id complete with ticket_id {ticket_id}')
+    print(f'= = = = = = = = = = SQLAlchemy get_date_and_direction_from_ticket_id complete with ticket_id {ticket_id}')
     return date, direction
 
 def get_all_users():
-    print(f'SQLAlchemy get_all_users started')
+    print(f'* * * * * * * * * * SQLAlchemy get_all_users started')
     session = Session()
     users = session.query(User).all()
-    print(f'SQLAlchemy get_all_users complete')
+    print(f'= = = = = = = = = = SQLAlchemy get_all_users complete')
     return users
 
 
 def get_all_ticket_ids():
-    print(f'SQLAlchemy get_all_ticket_ids started')
+    print(f'* * * * * * * * * * SQLAlchemy get_all_ticket_ids started')
     session = Session()
     tickets = session.query(Ticket).all()
     ticket_ids = [int(ticket.id) for ticket in tickets]
-    print(f'SQLAlchemy get_all_ticket_ids complete')
+    print(f'= = = = = = = = = = SQLAlchemy get_all_ticket_ids complete')
     return ticket_ids
 
 def get_user_settings(tg_id):
