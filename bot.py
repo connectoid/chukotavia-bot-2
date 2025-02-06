@@ -22,7 +22,7 @@ config = load_config('.env')
 
 BOT_TOKEN = config.tg_bot.token
 LOG_FILE = 'chukotabia-bot-2.log'
-REQUEST_INTERVAL = 120
+REQUEST_INTERVAL = 180
 EVERYDAY_MESSAGE_HOUR = 3
 EVERYDAY_MESSAGE_MINUTE = 0
 
@@ -63,7 +63,7 @@ async def send_message_to_users(dp: Dispatcher):
 
 async def request_dates(dp: Dispatcher):
     interval = random.randint(55, 165)
-    interval = 90
+    interval = 10
     users = get_all_users()
     for user in users:
         user_tickets = get_tickets(user.tg_id)
@@ -72,7 +72,8 @@ async def request_dates(dp: Dispatcher):
             if result:
                 await bot.send_message(chat_id=user.tg_id, text=ticket_message) 
             await asyncio.sleep(interval)
-            # sleep(interval)
+        await asyncio.sleep(interval)
+        # sleep(interval)
     
 
 async def schedule_jobs():
