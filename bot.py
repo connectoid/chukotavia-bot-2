@@ -77,6 +77,7 @@ async def request_dates(dp: Dispatcher):
     interval = 5
     all_users = load_dict_from_json()
     for user in all_users:
+        print(f'Requesting for user {user['tg_id']} {user['username']}')
         user_tickets = user['tickets']
         for user_ticket in user_tickets:
             result, ticket_message = request_tickets(user_ticket['date'], user_ticket['direction'])
