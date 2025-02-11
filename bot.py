@@ -26,8 +26,8 @@ config = load_config('.env')
 BOT_TOKEN = config.tg_bot.token
 LOG_FILE = 'chukotabia-bot-2.log'
 REQUEST_INTERVAL = 120
-EVERYDAY_MESSAGE_HOUR = 3
-EVERYDAY_MESSAGE_MINUTE = 0
+EVERYDAY_MESSAGE_HOUR = 0
+EVERYDAY_MESSAGE_MINUTE = 25
 ADMIN_CHAT_ID = os.getenv('ADMIN_CHAT_ID')
 
 
@@ -63,6 +63,7 @@ async def send_message_to_users(dp: Dispatcher):
     users = get_all_users()
     for user in users:
         if user.everyday_message:
+            print(f'Sending everyday message to user {user.tg_id}')
             await bot.send_message(chat_id=user.tg_id, text='Все нормально, я работаю') 
             await asyncio.sleep(2)
 
