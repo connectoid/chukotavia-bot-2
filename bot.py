@@ -26,8 +26,8 @@ config = load_config('.env')
 BOT_TOKEN = config.tg_bot.token
 LOG_FILE = 'chukotabia-bot-2.log'
 REQUEST_INTERVAL = 120
-EVERYDAY_MESSAGE_HOUR = 0
-EVERYDAY_MESSAGE_MINUTE = 25
+EVERYDAY_MESSAGE_HOUR = 1
+EVERYDAY_MESSAGE_MINUTE = 0
 ADMIN_CHAT_ID = os.getenv('ADMIN_CHAT_ID')
 
 
