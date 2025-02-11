@@ -5,6 +5,7 @@ import asyncio
 import random
 from time import sleep
 from datetime import datetime
+from pprint import pprint
 
 from aiogram import Bot, Dispatcher
 from aiogram.filters import Command
@@ -17,6 +18,7 @@ from handlers import other_handlers, user_handlers
 from service.tools import request_tickets
 from database.orm import get_all_users, get_tickets, get_ticket_by_id
 from keyboards.commands_menu import set_commands_menu
+from service.tools import save_db_to_json, load_dict_from_json
 
 dotenv.load_dotenv()
 config = load_config('.env')
@@ -55,7 +57,7 @@ async def main():
 
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
-    
+
 
 async def send_message_to_users(dp: Dispatcher):
     users = get_all_users()
@@ -72,49 +74,29 @@ async def send_message_to_user(user_tg_id, message_text):
 async def request_dates(dp: Dispatcher):
     interval = random.randint(55, 165)
     interval = 5
-    users = get_all_users()
-    for user in users:
-        user_tickets = get_tickets(user.tg_id)
+    all_users = load_dict_from_json()
+    for user in all_users:
+        user_tickets = user['tickets']
         for user_ticket in user_tickets:
-            result, ticket_message = request_tickets(user_ticket.date, user_ticket.direction)
+            result, ticket_message = request_tickets(user_ticket['date'], user_ticket['direction'])
             if result:
-                await bot.send_message(chat_id=user.tg_id, text=ticket_message) 
+                await bot.send_message(chat_id=user['tg_id'], text=ticket_message) 
             await asyncio.sleep(interval)
         await asyncio.sleep(interval)
         # sleep(interval)
-    
-
-async def request_dates_sync(dp: Dispatcher):
-    print(f'# # # # # # # Requesting tickets of all users')
-    interval = random.randint(55, 165)
-    interval = 5
-    users = get_all_users()
-    for user in users:
-        print(f'% % % % % % % Requesting tickets of user {user.tg_id} {user.username}')
-        user_tickets = get_tickets(user.tg_id)
-        for user_ticket in user_tickets:
-            print(f'~ ~ ~ ~ ~ ~ ~ Requesting user {user_ticket.date} {user_ticket.direction}')
-            result, ticket_message = request_tickets(user_ticket.date, user_ticket.direction)
-            print(f'{user.tg_id} ------------> {ADMIN_CHAT_ID}')
-            if result:
-                await bot.send_message(chat_id=user.tg_id, text=ticket_message)
-            # elif user.tg_id == ADMIN_CHAT_ID:
-            #     now = datetime.now()
-            #     current_datetime = now.strftime("%Y-%m-%d %H:%M:%S")
-            #     ticket_message = f'Это отладочное сообщение. Билетов нет. {current_datetime}'
-            #     await bot.send_message(chat_id=user.tg_id, text=ticket_message)
-            sleep(interval)
-        sleep(interval)
-    
+        
 
 async def schedule_jobs():
     scheduler.add_job(
         send_message_to_users, 'cron', day_of_week='*',
         hour=EVERYDAY_MESSAGE_HOUR, minute=EVERYDAY_MESSAGE_MINUTE, end_date='2030-12-31' , args=(dp,))
-    scheduler.add_job(request_dates_sync, 'interval', seconds = REQUEST_INTERVAL, args=(dp,), max_instances=2)
+    scheduler.add_job(request_dates, 'interval', seconds = REQUEST_INTERVAL, args=(dp,), max_instances=2)
 
 
 if __name__ == '__main__':
     dp.startup.register(set_commands_menu)
+    # all_users = get_all_users_from_db()
+    save_db_to_json()
     logging.info('Бот запущен')
     asyncio.run(main())
+    

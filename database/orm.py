@@ -4,9 +4,10 @@ from sqlalchemy.orm import sessionmaker
 from config_data.config import load_config
 from .models import Base, User, Ticket
 
+
 config = load_config('.env')
 
-engine = create_engine(config.db.database_url, echo=True, pool_size=25, max_overflow=25)
+engine = create_engine(config.db.database_url, echo=False, pool_size=25, max_overflow=25)
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 

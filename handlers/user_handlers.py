@@ -12,7 +12,7 @@ from database.orm import (add_user, add_ticket, get_tickets, delete_ticket,get_t
                           get_date_and_direction_from_ticket_id, get_user_settings, disable_everyday_message,
                           enable_everyday_message, is_premium_user, get_all_users, enable_premium, 
                           disable_premium, get_user)
-from service.tools import check_date, convert_date, request_tickets
+from service.tools import check_date, convert_date, request_tickets, save_db_to_json
 from config_data.config import load_config
 
 router = Router()
@@ -142,6 +142,7 @@ async def process_direction_sent(callback: CallbackQuery, state: FSMContext):
     direction_en = date_dict[callback.from_user.id]["direction"]
     date = date_dict[callback.from_user.id]["date"]
     if add_ticket(callback.from_user.id, date, direction_en):
+        save_db_to_json()
         await callback.message.edit_text(
             text='Спасибо! Ваши данные сохранены!\n'
                 f'Добавлен мониторинг билетов на {date} по маршруту {direction_ru}\n'
@@ -228,6 +229,7 @@ async def process_delete_ticket(callback: CallbackQuery):
     ticket_id = callback.data.split('_')[1]
     date, direction = get_date_and_direction_from_ticket_id(ticket_id)
     delete_ticket(ticket_id)
+    save_db_to_json()
     await callback.message.delete()
     await callback.message.answer(
         text=f'Билет на {date} по маршруту {directions[direction]} удален из мониторинга\n',

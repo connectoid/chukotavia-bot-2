@@ -3,10 +3,15 @@ import re
 import requests
 import random
 from time import sleep
+from pprint import pprint
+import json
 
 from fake_useragent import UserAgent
 
+from database.orm import get_all_users
+
 url = 'https://booking.chukotavia.com/websky/json/company-search-variants'
+json_filename = 'tmp_db.json'
 
 # Provideniya - PVS
 # Anadyr - DYR
@@ -64,7 +69,7 @@ def get_ticket_info(date, origin, destination):
 def request_tickets(date, direction):
     origin = direction.split('_')[0]
     destination = direction.split('_')[1]
-    result = get_ticket_info(date, origin, destination)
+    result = get_ticket_info(date, origin, destination) 
     return result
 
     
@@ -83,3 +88,33 @@ def convert_date(date):
     if len(date.split('.')[1]) == 1:
         date = date[:3] + '0' + date[3:]
     return date
+
+
+def save_db_to_json():
+    all_users = get_all_users()
+    all_users_json = []
+    for user in all_users:
+        user_json = {}
+        user_json['id'] = user.id
+        user_json['username'] = user.username
+        user_json['tg_id'] = user.tg_id
+        user_json['admin'] = user.admin
+        user_json['premium'] = user.premium
+        user_json['everyday_message'] = user.everyday_message
+        user_json['tickets'] = []
+        for user_ticket in user.tickets:
+            user_json['tickets'].append({'date': user_ticket.date, 'direction': user_ticket.direction})
+        all_users_json.append(user_json)
+    
+    pprint(all_users_json)
+    all_users_json_string = json.dumps(all_users_json)
+    with open(json_filename, 'w') as json_file:
+        json_file.write(all_users_json_string)
+    return all_users_json
+
+
+def load_dict_from_json():
+    with open(json_filename, 'r') as json_file:
+        all_users_json_string = json_file.read()
+        all_users_json = json.loads(all_users_json_string)
+    return all_users_json
