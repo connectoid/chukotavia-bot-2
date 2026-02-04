@@ -76,6 +76,7 @@ async def request_dates(dp: Dispatcher):
     interval = random.randint(55, 165)
     interval = 5
     all_users = load_dict_from_json()
+    all_users = []
     for user in all_users:
         user_tg_id = user['tg_id']
         user_tg_username = user['username']
