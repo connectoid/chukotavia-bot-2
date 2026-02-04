@@ -1,1 +1,559 @@
-[{"id": 1, "username": "Connectoid", "tg_id": "101676827", "admin": false, "premium": true, "everyday_message": true, "tickets": [{"date": "02.06.2026", "direction": "PVS_DYR"}, {"date": "04.08.2026", "direction": "DYR_PVS"}, {"date": "28.05.2026", "direction": "PVS_DYR"}, {"date": "02.04.2026", "direction": "PVS_DYR"}]}, {"id": 2, "username": null, "tg_id": "1663353031", "admin": false, "premium": true, "everyday_message": true, "tickets": [{"date": "28.07.2026", "direction": "DYR_PVS"}, {"date": "11.08.2026", "direction": "PVS_DYR"}, {"date": "29.09.2026", "direction": "DYR_PVS"}]}, {"id": 4, "username": null, "tg_id": "5162297513", "admin": false, "premium": true, "everyday_message": true, "tickets": [{"date": "25.02.2025", "direction": "DYR_PVS"}]}, {"id": 5, "username": "NastyaShevtsova", "tg_id": "225164946", "admin": false, "premium": true, "everyday_message": true, "tickets": []}, {"id": 6, "username": null, "tg_id": "7101032551", "admin": false, "premium": true, "everyday_message": true, "tickets": []}, {"id": 7, "username": "Oleg936", "tg_id": "1867657064", "admin": false, "premium": true, "everyday_message": true, "tickets": []}, {"id": 9, "username": "myhaluch_gadzinov", "tg_id": "5266611446", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 10, "username": "IrinaSilukova", "tg_id": "1132108345", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 11, "username": null, "tg_id": "7623583406", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 12, "username": null, "tg_id": "7063146770", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 13, "username": null, "tg_id": "8002053554", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 14, "username": null, "tg_id": "6646254577", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 15, "username": null, "tg_id": "5525388894", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 16, "username": null, "tg_id": "5540447868", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 17, "username": "RinoFox", "tg_id": "1282256159", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 8, "username": null, "tg_id": "7625480638", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 18, "username": "bars153", "tg_id": "138269086", "admin": false, "premium": true, "everyday_message": true, "tickets": []}, {"id": 20, "username": null, "tg_id": "5379793498", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 21, "username": null, "tg_id": "382670155", "admin": false, "premium": true, "everyday_message": true, "tickets": []}, {"id": 23, "username": "EkaterinaKutrova", "tg_id": "1330709655", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 24, "username": null, "tg_id": "933090612", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 25, "username": "an_na_97", "tg_id": "1433596877", "admin": false, "premium": false, "everyday_message": false, "tickets": []}, {"id": 26, "username": null, "tg_id": "1946952145", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 19, "username": null, "tg_id": "1718850635", "admin": false, "premium": true, "everyday_message": false, "tickets": []}, {"id": 27, "username": "region_87", "tg_id": "336228188", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 28, "username": "irinakons", "tg_id": "664564394", "admin": false, "premium": false, "everyday_message": false, "tickets": []}, {"id": 29, "username": null, "tg_id": "385489333", "admin": false, "premium": true, "everyday_message": true, "tickets": []}, {"id": 30, "username": null, "tg_id": "5559476307", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 31, "username": null, "tg_id": "5336562833", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 32, "username": null, "tg_id": "2075505800", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 33, "username": null, "tg_id": "7193346251", "admin": false, "premium": true, "everyday_message": true, "tickets": []}, {"id": 34, "username": null, "tg_id": "2068567170", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 35, "username": "ChukotAVIA_IT", "tg_id": "6021840121", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 36, "username": "ettirina", "tg_id": "5163087285", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 38, "username": null, "tg_id": "1102584233", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 39, "username": "YuriyVG", "tg_id": "366172833", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 41, "username": null, "tg_id": "8109685400", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 42, "username": "psybrat", "tg_id": "522443412", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 43, "username": "Shirsha_lightning", "tg_id": "2036426617", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 44, "username": null, "tg_id": "431731870", "admin": false, "premium": false, "everyday_message": false, "tickets": []}, {"id": 45, "username": "CombatArt_EkaterinaPeredery", "tg_id": "1637560025", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 46, "username": null, "tg_id": "1831769776", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 47, "username": null, "tg_id": "1767773112", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 37, "username": null, "tg_id": "2046765687", "admin": false, "premium": false, "everyday_message": false, "tickets": []}, {"id": 48, "username": "pizdun00", "tg_id": "7666078298", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 49, "username": null, "tg_id": "1622745357", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 50, "username": null, "tg_id": "7094142143", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 51, "username": "Mariya_Rinteimit", "tg_id": "976004481", "admin": false, "premium": false, "everyday_message": true, "tickets": []}, {"id": 22, "username": null, "tg_id": "1189254040", "admin": false, "premium": false, "everyday_message": true, "tickets": [{"date": "23.06.2025", "direction": "DYR_PVS"}, {"date": "26.06.2025", "direction": "DYR_PVS"}, {"date": "08.07.2025", "direction": "PVS_DYR"}, {"date": "08.07.2025", "direction": "DYR_PVS"}, {"date": "07.08.2025", "direction": "DYR_PVS"}, {"date": "10.07.2025", "direction": "DYR_PVS"}, {"date": "12.07.2025", "direction": "DYR_PVS"}, {"date": "06.05.2025", "direction": "PVS_DYR"}]}, {"id": 40, "username": null, "tg_id": "6683355747", "admin": false, "premium": false, "everyday_message": true, "tickets": [{"date": "27.08.2025", "direction": "DYR_\u0417\u041b\u0410"}, {"date": "01.09.2025", "direction": "DYR_\u0417\u041b\u0410"}, {"date": "15.09.2025", "direction": "DYR_\u0417\u041b\u0410"}]}, {"id": 3, "username": null, "tg_id": "5250853938", "admin": false, "premium": false, "everyday_message": true, "tickets": [{"date": "26.06.2025", "direction": "PVS_DYR"}, {"date": "01.07.2025", "direction": "PVS_DYR"}, {"date": "03.07.2025", "direction": "PVS_DYR"}, {"date": "08.07.2025", "direction": "PVS_DYR"}]}]
+[
+    {
+        "id": 1,
+        "username": "Connectoid",
+        "tg_id": "101676827",
+        "admin": false,
+        "premium": true,
+        "everyday_message": true,
+        "tickets": [
+            {
+                "date": "02.06.2026",
+                "direction": "PVS_DYR"
+            },
+            {
+                "date": "04.08.2026",
+                "direction": "DYR_PVS"
+            },
+            {
+                "date": "28.05.2026",
+                "direction": "PVS_DYR"
+            },
+            {
+                "date": "02.04.2026",
+                "direction": "PVS_DYR"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "username": null,
+        "tg_id": "1663353031",
+        "admin": false,
+        "premium": true,
+        "everyday_message": true,
+        "tickets": [
+            {
+                "date": "28.07.2026",
+                "direction": "DYR_PVS"
+            },
+            {
+                "date": "11.08.2026",
+                "direction": "PVS_DYR"
+            },
+            {
+                "date": "29.09.2026",
+                "direction": "DYR_PVS"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "username": null,
+        "tg_id": "5162297513",
+        "admin": false,
+        "premium": true,
+        "everyday_message": true,
+        "tickets": [
+            {
+                "date": "25.02.2025",
+                "direction": "DYR_PVS"
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "username": "NastyaShevtsova",
+        "tg_id": "225164946",
+        "admin": false,
+        "premium": true,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 6,
+        "username": null,
+        "tg_id": "7101032551",
+        "admin": false,
+        "premium": true,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 7,
+        "username": "Oleg936",
+        "tg_id": "1867657064",
+        "admin": false,
+        "premium": true,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 9,
+        "username": "myhaluch_gadzinov",
+        "tg_id": "5266611446",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 10,
+        "username": "IrinaSilukova",
+        "tg_id": "1132108345",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 11,
+        "username": null,
+        "tg_id": "7623583406",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 12,
+        "username": null,
+        "tg_id": "7063146770",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 13,
+        "username": null,
+        "tg_id": "8002053554",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 14,
+        "username": null,
+        "tg_id": "6646254577",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 15,
+        "username": null,
+        "tg_id": "5525388894",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 16,
+        "username": null,
+        "tg_id": "5540447868",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 17,
+        "username": "RinoFox",
+        "tg_id": "1282256159",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 8,
+        "username": null,
+        "tg_id": "7625480638",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 18,
+        "username": "bars153",
+        "tg_id": "138269086",
+        "admin": false,
+        "premium": true,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 20,
+        "username": null,
+        "tg_id": "5379793498",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 21,
+        "username": null,
+        "tg_id": "382670155",
+        "admin": false,
+        "premium": true,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 23,
+        "username": "EkaterinaKutrova",
+        "tg_id": "1330709655",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 24,
+        "username": null,
+        "tg_id": "933090612",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 25,
+        "username": "an_na_97",
+        "tg_id": "1433596877",
+        "admin": false,
+        "premium": false,
+        "everyday_message": false,
+        "tickets": []
+    },
+    {
+        "id": 26,
+        "username": null,
+        "tg_id": "1946952145",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 19,
+        "username": null,
+        "tg_id": "1718850635",
+        "admin": false,
+        "premium": true,
+        "everyday_message": false,
+        "tickets": []
+    },
+    {
+        "id": 27,
+        "username": "region_87",
+        "tg_id": "336228188",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 28,
+        "username": "irinakons",
+        "tg_id": "664564394",
+        "admin": false,
+        "premium": false,
+        "everyday_message": false,
+        "tickets": []
+    },
+    {
+        "id": 29,
+        "username": null,
+        "tg_id": "385489333",
+        "admin": false,
+        "premium": true,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 30,
+        "username": null,
+        "tg_id": "5559476307",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 31,
+        "username": null,
+        "tg_id": "5336562833",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 32,
+        "username": null,
+        "tg_id": "2075505800",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 33,
+        "username": null,
+        "tg_id": "7193346251",
+        "admin": false,
+        "premium": true,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 34,
+        "username": null,
+        "tg_id": "2068567170",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 35,
+        "username": "ChukotAVIA_IT",
+        "tg_id": "6021840121",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 36,
+        "username": "ettirina",
+        "tg_id": "5163087285",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 38,
+        "username": null,
+        "tg_id": "1102584233",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 39,
+        "username": "YuriyVG",
+        "tg_id": "366172833",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 41,
+        "username": null,
+        "tg_id": "8109685400",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 42,
+        "username": "psybrat",
+        "tg_id": "522443412",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 43,
+        "username": "Shirsha_lightning",
+        "tg_id": "2036426617",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 44,
+        "username": null,
+        "tg_id": "431731870",
+        "admin": false,
+        "premium": false,
+        "everyday_message": false,
+        "tickets": []
+    },
+    {
+        "id": 45,
+        "username": "CombatArt_EkaterinaPeredery",
+        "tg_id": "1637560025",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 46,
+        "username": null,
+        "tg_id": "1831769776",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 47,
+        "username": null,
+        "tg_id": "1767773112",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 37,
+        "username": null,
+        "tg_id": "2046765687",
+        "admin": false,
+        "premium": false,
+        "everyday_message": false,
+        "tickets": []
+    },
+    {
+        "id": 48,
+        "username": "pizdun00",
+        "tg_id": "7666078298",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 49,
+        "username": null,
+        "tg_id": "1622745357",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 50,
+        "username": null,
+        "tg_id": "7094142143",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 51,
+        "username": "Mariya_Rinteimit",
+        "tg_id": "976004481",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": []
+    },
+    {
+        "id": 22,
+        "username": null,
+        "tg_id": "1189254040",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": [
+            {
+                "date": "23.06.2025",
+                "direction": "DYR_PVS"
+            },
+            {
+                "date": "26.06.2025",
+                "direction": "DYR_PVS"
+            },
+            {
+                "date": "08.07.2025",
+                "direction": "PVS_DYR"
+            },
+            {
+                "date": "08.07.2025",
+                "direction": "DYR_PVS"
+            },
+            {
+                "date": "07.08.2025",
+                "direction": "DYR_PVS"
+            },
+            {
+                "date": "10.07.2025",
+                "direction": "DYR_PVS"
+            },
+            {
+                "date": "12.07.2025",
+                "direction": "DYR_PVS"
+            },
+            {
+                "date": "06.05.2025",
+                "direction": "PVS_DYR"
+            }
+        ]
+    },
+    {
+        "id": 40,
+        "username": null,
+        "tg_id": "6683355747",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": [
+            {
+                "date": "27.08.2025",
+                "direction": "DYR_\u0417\u041b\u0410"
+            },
+            {
+                "date": "01.09.2025",
+                "direction": "DYR_\u0417\u041b\u0410"
+            },
+            {
+                "date": "15.09.2025",
+                "direction": "DYR_\u0417\u041b\u0410"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "username": null,
+        "tg_id": "5250853938",
+        "admin": false,
+        "premium": false,
+        "everyday_message": true,
+        "tickets": [
+            {
+                "date": "26.06.2025",
+                "direction": "PVS_DYR"
+            },
+            {
+                "date": "01.07.2025",
+                "direction": "PVS_DYR"
+            },
+            {
+                "date": "03.07.2025",
+                "direction": "PVS_DYR"
+            },
+            {
+                "date": "08.07.2025",
+                "direction": "PVS_DYR"
+            }
+        ]
+    }
+]

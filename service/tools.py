@@ -94,17 +94,19 @@ def save_db_to_json():
     all_users = get_all_users()
     all_users_json = []
     for user in all_users:
-        user_json = {}
-        user_json['id'] = user.id
-        user_json['username'] = user.username
-        user_json['tg_id'] = user.tg_id
-        user_json['admin'] = user.admin
-        user_json['premium'] = user.premium
-        user_json['everyday_message'] = user.everyday_message
-        user_json['tickets'] = []
-        for user_ticket in user.tickets:
-            user_json['tickets'].append({'date': user_ticket.date, 'direction': user_ticket.direction})
-        all_users_json.append(user_json)
+        if user.premium and user.tickets:
+            user_json = {}
+            user_json['id'] = user.id
+            user_json['username'] = user.username
+            user_json['tg_id'] = user.tg_id
+            user_json['admin'] = user.admin
+            user_json['premium'] = user.premium
+            user_json['everyday_message'] = user.everyday_message
+            user_json['tickets'] = []
+            for user_ticket in user.tickets:
+                user_json['tickets'].append({'date': user_ticket.date, 'direction': user_ticket.direction})
+            all_users_json.append(user_json)
+    print(f'All users: {all_users_json}')
     
     all_users_json_string = json.dumps(all_users_json)
     with open(json_filename, 'w') as json_file:
