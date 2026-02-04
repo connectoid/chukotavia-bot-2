@@ -94,18 +94,17 @@ def save_db_to_json():
     all_users = get_all_users()
     all_users_json = []
     for user in all_users:
-        if user.premium:
-            user_json = {}
-            user_json['id'] = user.id
-            user_json['username'] = user.username
-            user_json['tg_id'] = user.tg_id
-            user_json['admin'] = user.admin
-            user_json['premium'] = user.premium
-            user_json['everyday_message'] = user.everyday_message
-            user_json['tickets'] = []
-            for user_ticket in user.tickets:
-                user_json['tickets'].append({'date': user_ticket.date, 'direction': user_ticket.direction})
-            all_users_json.append(user_json)
+        user_json = {}
+        user_json['id'] = user.id
+        user_json['username'] = user.username
+        user_json['tg_id'] = user.tg_id
+        user_json['admin'] = user.admin
+        user_json['premium'] = user.premium
+        user_json['everyday_message'] = user.everyday_message
+        user_json['tickets'] = []
+        for user_ticket in user.tickets:
+            user_json['tickets'].append({'date': user_ticket.date, 'direction': user_ticket.direction})
+        all_users_json.append(user_json)
     
     pprint(all_users_json)
     all_users_json_string = json.dumps(all_users_json)
@@ -118,4 +117,5 @@ def load_dict_from_json():
     with open(json_filename, 'r') as json_file:
         all_users_json_string = json_file.read()
         all_users_json = json.loads(all_users_json_string)
+        pprint(all_users_json)
     return all_users_json
