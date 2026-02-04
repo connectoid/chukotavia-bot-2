@@ -25,7 +25,7 @@ config = load_config('.env')
 
 BOT_TOKEN = config.tg_bot.token
 LOG_FILE = 'chukotabia-bot-2.log'
-REQUEST_INTERVAL = 120
+REQUEST_INTERVAL = 60
 EVERYDAY_MESSAGE_HOUR = 1
 EVERYDAY_MESSAGE_MINUTE = 0
 ADMIN_CHAT_ID = os.getenv('ADMIN_CHAT_ID')
@@ -75,7 +75,7 @@ async def send_message_to_user(user_tg_id, message_text):
 async def request_dates(dp: Dispatcher):
     print('REQUESTING DATES')
     interval = random.randint(55, 165)
-    interval = 5
+    interval = 1
     all_users = load_dict_from_json()
     for user in all_users:
         user_tg_id = user['tg_id']
