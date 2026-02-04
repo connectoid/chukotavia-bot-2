@@ -106,7 +106,6 @@ def save_db_to_json():
             user_json['tickets'].append({'date': user_ticket.date, 'direction': user_ticket.direction})
         all_users_json.append(user_json)
     
-    pprint(all_users_json)
     all_users_json_string = json.dumps(all_users_json)
     with open(json_filename, 'w') as json_file:
         json_file.write(all_users_json_string)
@@ -117,5 +116,4 @@ def load_dict_from_json():
     with open(json_filename, 'r') as json_file:
         all_users_json_string = json_file.read()
         all_users_json = json.loads(all_users_json_string)
-        pprint(all_users_json)
     return all_users_json
