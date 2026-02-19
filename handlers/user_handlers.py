@@ -80,7 +80,7 @@ async def process_adddate_command(message: Message, state: FSMContext):
                             show_alert=False)
         await state.set_state(FSMAddDate.add_date)
     else:
-        await message.answer(text='ℹ️ У вас нет прав на использования бота!\n'
+        await message.answer(text='ℹ️ Эта функция Вам пока недоступна.\n'
                             'Для получения доступа ко всем функциям бота, '
                             'напишите в Телеграм на @connectoid',
                             show_alert=False)
