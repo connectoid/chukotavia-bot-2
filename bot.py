@@ -82,10 +82,12 @@ async def request_dates(dp: Dispatcher):
         user_tg_username = user['username']
         print(f'Requesting for user {user_tg_id} {user_tg_username}')
         user_tickets = user['tickets']
-        for user_ticket in user_tickets:
+        for user_ticket in user_tickets: 
             result, ticket_message = request_tickets(user_ticket['date'], user_ticket['direction'])
             if result:
-                await bot.send_message(chat_id=user['tg_id'], text=ticket_message) 
+                await bot.send_message(chat_id=user['tg_id'], text=ticket_message)
+            else:
+                print(f'Request error for user {user_tg_id}, with message {ticket_message}')
             await asyncio.sleep(interval)
         await asyncio.sleep(interval)
         # sleep(interval)

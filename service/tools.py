@@ -63,7 +63,7 @@ def get_ticket_info(date, origin, destination):
         return parse_json(r)
     except IOError:
         print('Ошибка запроса')
-    return None
+        return False, 'Request error'
 
 
 def request_tickets(date, direction):
