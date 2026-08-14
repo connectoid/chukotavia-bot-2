@@ -278,7 +278,7 @@ async def process_sendmessage_command(message: Message, state: State):
         await message.answer(text='ℹ️ Эта функция доступна только администраторам!')
 
 
-@router.message(StateFilter(FSMSendMessage.add_message), F.text.isalpha())
+@router.message(StateFilter(FSMSendMessage.add_message))
 async def process_message_sent(message: Message, state: FSMContext, bot: Bot):
     message_text = message.text
     await state.update_data(message_text=message_text)
