@@ -1,6 +1,8 @@
+import asyncio
+
 from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command, CommandStart, StateFilter
-from aiogram import Router, F 
+from aiogram import Router, F, Bot
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import default_state, State, StatesGroup
 from aiogram.fsm.storage.memory import MemoryStorage
@@ -21,6 +23,11 @@ storage = MemoryStorage()
 class FSMAddDate(StatesGroup):
     add_date = State()
     add_direction = State()
+
+
+class FSMSendMessage(StatesGroup):
+    add_message = State()
+
 
 config = load_config('.env')
 ADMINS = config.tg_bot.admins
@@ -257,6 +264,30 @@ async def process_give_premium_command(message: Message):
                             reply_markup=keyboard)
     else:
         await message.answer(text='ℹ️ Эта функция доступна только админстраторам!')
+
+
+@router.message(Command(commands='sendmessage'))
+async def process_sendmessage_command(message: Message, state: State):
+    if str(message.from_user.id) in ADMINS:
+        await state.set_state(FSMSendMessage.add_message)
+        await message.answer(
+                text='Введите сообщение для рассылки',
+                reply_markup=main_menu
+            )
+    else:
+        await message.answer(text='ℹ️ Эта функция доступна только администраторам!')
+
+
+@router.message(StateFilter(FSMSendMessage.add_message), F.text.isalpha())
+async def process_message_sent(message: Message, state: FSMContext, bot: Bot):
+    message_text = message.text
+    await state.update_data(message_text=message_text)
+    users = get_all_users()
+    for user in users:
+        print(f'Sending message to user {user.tg_id}')
+        await bot.send_message(chat_id=user.tg_id, text=message_text) 
+        await asyncio.sleep(2)
+    await state.clear()
 
 
 @router.callback_query(lambda x: 'enable_premium' in x.data)

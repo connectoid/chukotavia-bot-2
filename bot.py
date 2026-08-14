@@ -39,17 +39,11 @@ dp = Dispatcher()
 
 
 async def main():
-    # dotenv.load_dotenv()
-    # config = load_config('.env')
-    # BOT_TOKEN = config.tg_bot.token
-    # LOG_FILE = 'chukotabia-bot-2.log'
     logging.basicConfig(level=logging.WARNING,
                         filename=LOG_FILE,
                         filemode='a',
                         format='[%(asctime)s] #%(levelname)-8s %(filename)s:'
                         '%(lineno)d - %(name)s - %(message)s')
-    # bot = Bot(token=BOT_TOKEN)
-    # dp = Dispatcher()
     dp.include_router(user_handlers.router)
     dp.include_router(other_handlers.router)
     await schedule_jobs()
